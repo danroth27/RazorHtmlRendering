@@ -1,6 +1,10 @@
 ﻿<h3>MyComponent</h3>
 <p>The time is @DateTime.Now.ToShortTimeString()</p>
+<p>@Message</p>
 
 @code {
+
+    [Parameter]
+    public string Message { get; set; }
 
 }

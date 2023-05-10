@@ -10,10 +10,17 @@ services.AddLogging();
 IServiceProvider serviceProvider = services.BuildServiceProvider();
 ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
+var dictionary = new Dictionary<string, object?>
+{
+    { "Message", "Hello from Render Component Example!" }
+};
+
 await using var htmlRenderer = new HtmlRenderer(serviceProvider, loggerFactory);
 var html = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
 {
-    var output = await htmlRenderer.RenderComponentAsync<MyComponent>(ParameterView.Empty);
+    var parameters = ParameterView.FromDictionary(dictionary);
+
+    var output = await htmlRenderer.RenderComponentAsync<MyComponent>(parameters);
     return output.ToHtmlString();
 });
 
